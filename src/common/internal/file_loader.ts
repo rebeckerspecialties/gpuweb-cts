@@ -1,4 +1,3 @@
-import * as listing from '../../webgpu/listing.js';
 import { IterableTestGroup } from '../internal/test_group.js';
 import { assert } from '../util/util.js';
 
@@ -85,7 +84,7 @@ export abstract class TestFileLoader {
       fullyExpandSubtrees: fullyExpandSubtrees.map(s => parseQuery(s)),
       maxChunkTime,
     });
-    this.dispatchEvent(new MessageEvent<void>('finish'));
+    // this.dispatchEvent(new MessageEvent<void>('finish'));
     return tree;
   }
 
@@ -101,9 +100,9 @@ export class DefaultTestFileLoader extends TestFileLoader {
   }
 
   import(path: string): Promise<SpecFile> {
-    console.log(path);
-    return import(
-      `../../webgpu/api/operation/adapter/info.spec.js`
-    ) as unknown as Promise<SpecFile>;
+    const keys = require.context('../../webgpu', true, /\.spec\./).keys();
+    const key = keys.find(filename => filename.includes(path.slice(8, -3)));
+    const file = require.context('../../webgpu', true, /\.spec\./)(key ?? '');
+    return file;
   }
 }

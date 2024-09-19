@@ -23,6 +23,7 @@ export const runTests = async () => {
 
   for (const testcase of testcases) {
     const name = testcase.query.toString();
+    console.log(name);
 
     const [rec, res] = log.record(name);
     await testcase.run(rec, expectations);
