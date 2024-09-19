@@ -70,6 +70,7 @@
     "@types/react-test-renderer": "^18.0.0",
     "@types/serve-index": "^1.9.3",
     "@types/w3c-image-capture": "^1.0.10",
+    "@types/webpack-env": "^1.18.5",
     "@typescript-eslint/eslint-plugin": "^6.9.1",
     "@typescript-eslint/parser": "^6.9.1",
     "@webgpu/types": "^0.1.43",

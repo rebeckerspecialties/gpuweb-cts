@@ -2,7 +2,7 @@
   "extends": ["eslint-config-react-native-wcandillon/tsconfig.base"],
   "compilerOptions": {
     "noUncheckedIndexedAccess": false,
-    "types": ["@webgpu/types"],
+    "types": ["@webgpu/types", "@types/webpack-env"],
     "module": "esnext"
   }
 }

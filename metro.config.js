@@ -7,7 +7,7 @@ module.exports = makeMetroConfig({
         inlineRequires: false,
       },
     }),
-    unstable_AllowRequireContext: true,
+    unstable_allowRequireContext: true,
   },
   resolver: {
     resolveRequest: (context, rawModuleName, platform) => {

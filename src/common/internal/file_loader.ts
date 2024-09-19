@@ -1,3 +1,4 @@
+import * as listing from '../../webgpu/listing.js';
 import { IterableTestGroup } from '../internal/test_group.js';
 import { assert } from '../util/util.js';
 
@@ -63,9 +64,7 @@ export abstract class TestFileLoader {
 
   async importSpecFile(suite: string, path: string[]): Promise<SpecFile> {
     const url = `${suite}/${path.join('/')}.spec.js`;
-    this.dispatchEvent(new MessageEvent<ImportInfo>('import', { data: { url } }));
     const ret = await this.import(url);
-    this.dispatchEvent(new MessageEvent<ImportInfo>('imported', { data: { url } }));
     return ret;
   }
 
@@ -98,10 +97,13 @@ export abstract class TestFileLoader {
 
 export class DefaultTestFileLoader extends TestFileLoader {
   async listing(_suite: string): Promise<TestSuiteListing> {
-    return ((await require.context(`../../`, true, /listing\./)) as ListingFile).listing;
+    return ((await import(`../../webgpu/listing.js`)) as ListingFile).listing;
   }
 
   import(path: string): Promise<SpecFile> {
-    return require.context(`../../webgpu/`, true, /\.spec\.js/);
+    console.log(path);
+    return import(
+      `../../webgpu/api/operation/adapter/info.spec.js`
+    ) as unknown as Promise<SpecFile>;
   }
 }

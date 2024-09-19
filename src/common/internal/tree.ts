@@ -292,6 +292,7 @@ export async function loadTreeForQuery(
 ): Promise<TestTree> {
   const suite = queryToLoad.suite;
   const specs = await loader.listing(suite);
+  console.log(specs);
 
   const subqueriesToExpandEntries = Array.from(subqueriesToExpand.entries());
   const seenSubqueriesToExpand: boolean[] = new Array(subqueriesToExpand.length);
