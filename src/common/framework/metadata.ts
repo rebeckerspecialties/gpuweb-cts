@@ -17,13 +17,7 @@ export type TestMetadataListing = {
 export function loadMetadataForSuite(suiteDir: string): TestMetadataListing | null {
   assert(typeof require !== 'undefined', 'loadMetadataForSuite is only implemented on Node');
   /* eslint-disable-next-line n/no-restricted-require */
-  const fs = require('fs');
 
-  const metadataFile = `${suiteDir}/listing_meta.json`;
-  if (!fs.existsSync(metadataFile)) {
-    return null;
-  }
-
-  const metadata: TestMetadataListing = JSON.parse(fs.readFileSync(metadataFile, 'utf8'));
+  const metadata: TestMetadataListing = require(`../../webgpu/listing_meta.json`);
   return metadata;
 }

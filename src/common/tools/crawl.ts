@@ -82,7 +82,7 @@ export async function crawl(
         const filename = `../../${suite}/${filepathWithoutExtension}.spec.js`;
 
         assert(!process.env.STANDALONE_DEV_SERVER);
-        const mod = (await import(filename)) as SpecFile;
+        const mod = (await require.context('../../webgpu/', true, /\.spec\.js/)) as SpecFile;
         assert(mod.description !== undefined, 'Test spec file missing description: ' + filename);
         assert(mod.g !== undefined, 'Test spec file missing TestGroup definition: ' + filename);
 

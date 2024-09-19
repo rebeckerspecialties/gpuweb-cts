@@ -57,7 +57,7 @@ export interface TestFileLoader extends EventTarget {
 
 // Base class for DefaultTestFileLoader and FakeTestFileLoader.
 /* eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging */
-export abstract class TestFileLoader extends EventTarget {
+export abstract class TestFileLoader {
   abstract listing(suite: string): Promise<TestSuiteListing>;
   protected abstract import(path: string): Promise<SpecFile>;
 
@@ -97,11 +97,11 @@ export abstract class TestFileLoader extends EventTarget {
 }
 
 export class DefaultTestFileLoader extends TestFileLoader {
-  async listing(suite: string): Promise<TestSuiteListing> {
-    return ((await import(`../../${suite}/listing.js`)) as ListingFile).listing;
+  async listing(_suite: string): Promise<TestSuiteListing> {
+    return ((await require.context(`../../`, true, /listing\./)) as ListingFile).listing;
   }
 
   import(path: string): Promise<SpecFile> {
-    return import(`../../${path}`);
+    return require.context(`../../webgpu/`, true, /\.spec\.js/);
   }
 }

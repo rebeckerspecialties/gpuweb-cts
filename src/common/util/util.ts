@@ -91,7 +91,7 @@ export function skipTestCase(msg: string): never {
  * It is available in all browsers, but it is not in scope by default in Node.
  */
 /* eslint-disable-next-line n/no-restricted-require */
-const perf = typeof performance !== 'undefined' ? performance : require('perf_hooks').performance;
+const perf = performance;
 
 /**
  * Calls the appropriate `performance.now()` depending on whether running in a browser or Node.
