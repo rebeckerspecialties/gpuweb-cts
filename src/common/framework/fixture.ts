@@ -121,19 +121,19 @@ export class Fixture<S extends SubcaseBatchState = SubcaseBatchState> {
 
     // And clean up any objects now that they're done being used.
     for (const o of this.objectsToCleanUp) {
-      if ('getExtension' in o) {
+      if ('getExtension' in o && o.getExtension) {
         const WEBGL_lose_context = o.getExtension('WEBGL_lose_context');
         if (WEBGL_lose_context) WEBGL_lose_context.loseContext();
-      } else if ('destroy' in o) {
+      } else if ('destroy' in o && o.destroy) {
         o.destroy();
-      } else if ('destroyAsync' in o) {
+      } else if ('destroyAsync' in o && o.destroyAsync) {
         await o.destroyAsync();
-      } else if ('close' in o) {
+      } else if ('close' in o && o.close) {
         o.close();
       } else {
         // HTMLVideoElement
-        o.src = '';
-        o.srcObject = null;
+        (o as HTMLVideoElement).src = '';
+        (o as HTMLVideoElement).srcObject = null;
       }
     }
   }
