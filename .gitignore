@@ -195,3 +195,22 @@ $RECYCLE.BIN/
 trace/
 
 # End of https://www.gitignore.io/api/linux,macos,windows,node
+
+
+# React Native Test App
+*.binlog
+*.hprof
+*.xcworkspace/
+*.zip
+.DS_Store
+.gradle/
+.idea/
+.vs/
+.xcode.env
+Pods/
+build/
+dist/*
+!dist/.gitignore
+local.properties
+msbuild.binlog
+node_modules/

@@ -1,7 +1,7 @@
 module.exports = function (api) {
   api.cache(true);
   return {
-    presets: ['@babel/preset-typescript'],
+    presets: ['@babel/preset-typescript', 'module:@react-native/babel-preset'],
     plugins: [
       'const-enum',
       [
