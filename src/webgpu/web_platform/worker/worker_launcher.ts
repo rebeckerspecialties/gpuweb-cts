@@ -10,7 +10,7 @@ export async function launchDedicatedWorker() {
     throw new SkipTestCase(`Worker undefined in context ${globalThis.constructor.name}`);
   }
 
-  const selfPath = import.meta.url;
+  const selfPath = '';
   const selfPathDir = selfPath.substring(0, selfPath.lastIndexOf('/'));
   const workerPath = selfPathDir + '/worker.js';
   const worker = new Worker(workerPath, { type: 'module' });
@@ -27,7 +27,7 @@ export async function launchSharedWorker() {
     throw new SkipTestCase(`SharedWorker undefined in context ${globalThis.constructor.name}`);
   }
 
-  const selfPath = import.meta.url;
+  const selfPath = '';
   const selfPathDir = selfPath.substring(0, selfPath.lastIndexOf('/'));
   const workerPath = selfPathDir + '/worker.js';
   const worker = new SharedWorker(workerPath, { type: 'module' });
@@ -50,7 +50,7 @@ export async function launchServiceWorker() {
     );
   }
 
-  const selfPath = import.meta.url;
+  const selfPath = '';
   const selfPathDir = selfPath.substring(0, selfPath.lastIndexOf('/'));
   const serviceWorkerPath = selfPathDir + '/worker.js';
   const registration = await navigator.serviceWorker.register(serviceWorkerPath, {
