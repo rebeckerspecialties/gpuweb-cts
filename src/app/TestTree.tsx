@@ -1,13 +1,21 @@
 import { useCallback, useState } from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { runTests } from './runTests';
 import { Canvas, useCanvasEffect } from 'react-native-wgpu';
+import { LiveTestCaseResult } from '../common/internal/logging/result';
+
+type Results = {
+  failed: [string, LiveTestCaseResult][];
+  warned: [string, LiveTestCaseResult][];
+  skipped: [string, LiveTestCaseResult][];
+  total: number;
+};
 
 export const TestTree: React.FC = () => {
-  const [results, setResults] = useState({
-    failed: 0,
-    warned: 0,
-    skipped: 0,
+  const [results, setResults] = useState<Results>({
+    failed: [],
+    warned: [],
+    skipped: [],
     total: 0,
   });
 
@@ -16,9 +24,9 @@ export const TestTree: React.FC = () => {
   const runTestsWithLogging = useCallback(async () => {
     const { failed, total, skipped, warned } = await runTests();
     setResults({
-      failed: failed.length,
-      warned: warned.length,
-      skipped: skipped.length,
+      failed,
+      warned,
+      skipped,
       total,
     });
   }, []);
@@ -33,9 +41,19 @@ export const TestTree: React.FC = () => {
         <View style={style.webgpu}>
           <Button title="Run Tests" onPress={runTestsWithLogging} />
           <Text>Total: {results.total}</Text>
-          <Text>Failed: {results.failed}</Text>
-          <Text>Warned: {results.warned}</Text>
-          <Text>Skipped: {results.skipped}</Text>
+          <Text>Failed: {results.failed.length}</Text>
+          <Text>Warned: {results.warned.length}</Text>
+          <Text>Skipped: {results.skipped.length}</Text>
+        </View>
+      ) : null}
+      {results.failed.length > 0 ? (
+        <View style={style.container}>
+          <Text>Failing Tests:</Text>
+          <ScrollView>
+            {results.failed.map(([name]) => {
+              return <Text key={name}>{name}</Text>;
+            })}
+          </ScrollView>
         </View>
       ) : null}
       <Canvas ref={ref} style={style.webgpu} />
