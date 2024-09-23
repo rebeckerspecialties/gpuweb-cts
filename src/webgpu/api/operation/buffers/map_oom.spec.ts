@@ -39,7 +39,8 @@ g.test('mappedAtCreation')
     if (oom) {
       // getMappedRange is normally valid on OOM buffers, but this one fails because the
       // (default) range is too large to create the returned ArrayBuffer.
-      t.shouldThrow('RangeError', f);
+      // t.shouldThrow('RangeError', f);
+      t.fail('OOM test not supported');
     } else {
       const buffer = f();
       const mapping = buffer.getMappedRange();
