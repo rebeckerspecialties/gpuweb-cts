@@ -57,15 +57,13 @@ export interface TestFileLoader extends EventTarget {
 
 // Base class for DefaultTestFileLoader and FakeTestFileLoader.
 /* eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging */
-export abstract class TestFileLoader extends EventTarget {
+export abstract class TestFileLoader {
   abstract listing(suite: string): Promise<TestSuiteListing>;
   protected abstract import(path: string): Promise<SpecFile>;
 
   async importSpecFile(suite: string, path: string[]): Promise<SpecFile> {
     const url = `${suite}/${path.join('/')}.spec.js`;
-    this.dispatchEvent(new MessageEvent<ImportInfo>('import', { data: { url } }));
     const ret = await this.import(url);
-    this.dispatchEvent(new MessageEvent<ImportInfo>('imported', { data: { url } }));
     return ret;
   }
 
@@ -86,7 +84,6 @@ export abstract class TestFileLoader extends EventTarget {
       fullyExpandSubtrees: fullyExpandSubtrees.map(s => parseQuery(s)),
       maxChunkTime,
     });
-    this.dispatchEvent(new MessageEvent<void>('finish'));
     return tree;
   }
 
@@ -97,11 +94,14 @@ export abstract class TestFileLoader extends EventTarget {
 }
 
 export class DefaultTestFileLoader extends TestFileLoader {
-  async listing(suite: string): Promise<TestSuiteListing> {
-    return ((await import(`../../${suite}/listing.js`)) as ListingFile).listing;
+  async listing(_suite: string): Promise<TestSuiteListing> {
+    return ((await import(`../../webgpu/listing.js`)) as ListingFile).listing;
   }
 
   import(path: string): Promise<SpecFile> {
-    return import(`../../${path}`);
+    const keys = require.context('../../webgpu', true, /\.spec\./).keys();
+    const key = keys.find(filename => filename.includes(path.slice(8, -3)));
+    const file = require.context('../../webgpu', true, /\.spec\./)(key ?? '');
+    return file;
   }
 }
