@@ -10,6 +10,8 @@ export async function launchDedicatedWorker() {
     throw new SkipTestCase(`Worker undefined in context ${globalThis.constructor.name}`);
   }
 
+  // Note: import.meta.url is not supported in React Native
+  // const selfPath = import.meta.url;
   const selfPath = '';
   const selfPathDir = selfPath.substring(0, selfPath.lastIndexOf('/'));
   const workerPath = selfPathDir + '/worker.js';
@@ -27,6 +29,8 @@ export async function launchSharedWorker() {
     throw new SkipTestCase(`SharedWorker undefined in context ${globalThis.constructor.name}`);
   }
 
+  // Note: import.meta.url is not supported in React Native
+  // const selfPath = import.meta.url;
   const selfPath = '';
   const selfPathDir = selfPath.substring(0, selfPath.lastIndexOf('/'));
   const workerPath = selfPathDir + '/worker.js';
@@ -50,6 +54,8 @@ export async function launchServiceWorker() {
     );
   }
 
+  // Note: import.meta.url is not supported in React Native
+  // const selfPath = import.meta.url;
   const selfPath = '';
   const selfPathDir = selfPath.substring(0, selfPath.lastIndexOf('/'));
   const serviceWorkerPath = selfPathDir + '/worker.js';

@@ -84,7 +84,6 @@ export abstract class TestFileLoader {
       fullyExpandSubtrees: fullyExpandSubtrees.map(s => parseQuery(s)),
       maxChunkTime,
     });
-    // this.dispatchEvent(new MessageEvent<void>('finish'));
     return tree;
   }
 
