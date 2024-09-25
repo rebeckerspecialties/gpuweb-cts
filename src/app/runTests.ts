@@ -1,4 +1,5 @@
 import { DefaultTestFileLoader } from '../common/internal/file_loader';
+import { LogMessageWithStack } from '../common/internal/logging/log_message';
 import { Logger } from '../common/internal/logging/logger';
 import { LiveTestCaseResult } from '../common/internal/logging/result';
 import { parseQuery } from '../common/internal/query/parseQuery';
@@ -6,6 +7,9 @@ import { parseExpectationsForTestQuery } from '../common/internal/query/query';
 import { assert, unreachable } from '../common/util/util';
 
 const filterQuery = 'webgpu:api,operation,*';
+
+// Time out tests after 1 minute
+const TEST_TIMEOUT = 60000;
 
 export const runTests = async () => {
   const loader = new DefaultTestFileLoader();
@@ -26,7 +30,8 @@ export const runTests = async () => {
 
     console.log(name);
     const [rec, res] = log.record(name);
-    await testcase.run(rec, expectations);
+    const timeout = createTimeout(res, TEST_TIMEOUT);
+    await Promise.race([testcase.run(rec, expectations), timeout]);
     if (res.status === 'fail') {
       console.log(res.logs);
     }
@@ -57,4 +62,19 @@ export const runTests = async () => {
     warned,
     skipped,
   };
+};
+
+const createTimeout = (res: LiveTestCaseResult, timeoutLength: number) => {
+  return new Promise<void>(resolve => {
+    setTimeout(() => {
+      res.status = 'fail';
+      res.logs = [
+        LogMessageWithStack.wrapError(
+          'timeout',
+          new Error(`Manually timed out test after ${timeoutLength} ms.`)
+        ),
+      ];
+      resolve();
+    }, timeoutLength);
+  });
 };
