@@ -8,8 +8,8 @@ import { assert, unreachable } from '../common/util/util';
 
 const filterQuery = 'webgpu:api,operation,*';
 
-// Time out tests after 1 minute
-const TEST_TIMEOUT = 60000;
+// Time out tests after a delay
+const TEST_TIMEOUT = 5000;
 
 export const runTests = async () => {
   const loader = new DefaultTestFileLoader();
