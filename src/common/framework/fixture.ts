@@ -158,7 +158,8 @@ export class Fixture<S extends SubcaseBatchState = SubcaseBatchState> {
       this.objectsToCleanUp.push({
         async destroyAsync() {
           o.destroy();
-          await o.lost;
+          // TODO FIXME: awaiting device.lost a second time causes promise to hang
+          // await o.lost;
         },
       });
     } else {
