@@ -39,6 +39,7 @@ g.test('mappedAtCreation')
     if (oom) {
       // getMappedRange is normally valid on OOM buffers, but this one fails because the
       // (default) range is too large to create the returned ArrayBuffer.
+      // TODO FIXME: t.createBufferTracked crashes
       t.fail('Test causes crash');
       // t.shouldThrow('RangeError', f);
     } else {
