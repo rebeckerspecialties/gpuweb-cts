@@ -325,13 +325,15 @@ have unexpected values then get drawn to the color buffer, which is later checke
       { leftHeader: 'expected ==', getValueForCell: _index => kCheckPassedValue },
     ];
     if (dsActual && dsExpected && format === 'depth32float') {
-      await Promise.all([dsActual.mapAsync(GPUMapMode.READ), dsExpected.mapAsync(GPUMapMode.READ)]);
-      const act = new Float32Array(dsActual.getMappedRange());
-      const exp = new Float32Array(dsExpected.getMappedRange());
-      predicatePrinter.push(
-        { leftHeader: 'act ==', getValueForCell: index => act[index].toFixed(2) },
-        { leftHeader: 'exp ==', getValueForCell: index => exp[index].toFixed(2) }
-      );
+      t.fail('depth32float unsupported');
+      return;
+      // await Promise.all([dsActual.mapAsync(GPUMapMode.READ), dsExpected.mapAsync(GPUMapMode.READ)]);
+      // const act = new Float32Array(dsActual.getMappedRange());
+      // const exp = new Float32Array(dsExpected.getMappedRange());
+      // predicatePrinter.push(
+      //   { leftHeader: 'act ==', getValueForCell: index => act[index].toFixed(2) },
+      //   { leftHeader: 'exp ==', getValueForCell: index => exp[index].toFixed(2) }
+      // );
     }
     t.expectGPUBufferValuesPassCheck(
       checkBuffer,
