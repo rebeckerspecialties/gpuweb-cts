@@ -84,7 +84,7 @@ export class DevicePool {
         if ('destroy' in holder.device) {
           holder.device.destroy();
           // Wait for destruction (or actual device loss if any) to complete.
-          await holder.device.lost;
+          // await holder.device.lost;
         }
 
         // Release the (hopefully only) ref to the GPUDevice.

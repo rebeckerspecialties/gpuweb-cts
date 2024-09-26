@@ -14,7 +14,19 @@ To install dependencies for the conformance test suite, run the following comman
 npm install
 ```
 
+For ios:
+
+```
+pod install --project-directory=ios
+```
+
 The React Native portion of this test suite is built on top of [React Native Test App](https://github.com/microsoft/react-native-test-app). Build instructions for your target platform can be found here: https://github.com/microsoft/react-native-test-app/wiki/Quick-Start#platform-specific-instructions. The conformance test suite targets Hermes by default.
+
+To run on an ios simulator, run:
+
+```
+npm run ios
+```
 
 To run tests, click the "Run Tests" button on the app homepage. Once tests complete, the app will generate a summary of failed and skipped tests, along with a list of all tests that failed. The tests will take a few minutes to run. A log of the current running test can be viewed in the Metro console.
 
@@ -24,12 +36,14 @@ For the `react-native-wgpu` library, there are a few blockers for generating a f
 
 - `webgpu/api/operation/adapter`: Main thread hangs on a promise await. See: https://github.com/wcandillon/react-native-webgpu/issues/126
 - `webgpu/api/operation/buffers`: `map.spec` and `map_oom.spec` have tests that crash when trying to allocate a buffer. `remapped_for_write`, `mappedAtCreation,mapState`, `mapAsync,mapState`, `mappedAtCreation`.
+- `webgpu/api/operation/command_buffer`: Tests with compressed texture formats seem to hang indefinitely (e.g. astc-4x4-unorm). Tests following the copyTextureToTexture tests all seem to time out, possibly due to the depth32float_stencil8 format.
 - `webgpu/api/operation/memory_sync`: The "either" interpolation option is not supported, causing shader compilation to crash. Shader compilation crashes should likely not crash the app.
-- `webgpu/api/operation/render_pipeline`: Tests crash with an unknown error.
+- `webgpu/api/operation/render_pipeline`: Tests crash with an unknown error in `pipeline_output_targets.spec`.
 - `webgpu/api/operation/rendering`: Same as `memory_sync` tests.
 - `webgpu/api/operation/shader_module`: Different shader compilation issue.
 - `webgpu/api/operation/storage_texture`: Same as `memory_sync` tests.
 - `webgpu/api/operation/vertex_state`: Same as `memory_sync` tests.
+- `webgpu/api/operation/reflection`: Attribute tests crash.
 
 ## Contributing
 

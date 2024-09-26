@@ -1,3 +1,4 @@
+import { globalTestConfig } from '../common/framework/test_config';
 import { DefaultTestFileLoader } from '../common/internal/file_loader';
 import { Logger } from '../common/internal/logging/logger';
 import { LiveTestCaseResult } from '../common/internal/logging/result';
@@ -6,6 +7,8 @@ import { parseExpectationsForTestQuery } from '../common/internal/query/query';
 import { assert, unreachable } from '../common/util/util';
 
 const filterQuery = 'webgpu:api,operation,*';
+
+globalTestConfig.compatibility = true;
 
 export const runTests = async () => {
   const loader = new DefaultTestFileLoader();
@@ -27,7 +30,7 @@ export const runTests = async () => {
     console.log(name);
     const [rec, res] = log.record(name);
     await testcase.run(rec, expectations);
-    if (res.status === 'fail') {
+    if (res.status === 'fail' || res.status === 'skip') {
       console.log(res.logs);
     }
 

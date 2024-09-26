@@ -1,6 +1,11 @@
 import { TestCaseRecorder } from '../internal/logging/test_case_recorder.js';
 import { JSONWithUndefined } from '../internal/params_utils.js';
-import { assert, ExceptionCheckOptions, unreachable } from '../util/util.js';
+import {
+  assert,
+  ExceptionCheckOptions,
+  raceWithRejectOnTimeout,
+  unreachable,
+} from '../util/util.js';
 
 export class SkipTestCase extends Error {}
 export class UnexpectedPassError extends Error {}
@@ -113,7 +118,7 @@ export class Fixture<S extends SubcaseBatchState = SubcaseBatchState> {
     while (this.eventualExpectations.length) {
       const p = this.eventualExpectations.shift()!;
       try {
-        await p;
+        await raceWithRejectOnTimeout(p, 1000, 'Eventual expectation timed out');
       } catch (ex) {
         this.rec.threw(ex);
       }
@@ -158,7 +163,8 @@ export class Fixture<S extends SubcaseBatchState = SubcaseBatchState> {
       this.objectsToCleanUp.push({
         async destroyAsync() {
           o.destroy();
-          await o.lost;
+          // TODO FIXME: awaiting device.lost a second time causes promise to hang
+          // await o.lost;
         },
       });
     } else {

@@ -61,89 +61,90 @@ g.test('color,attachments')
     t.selectDeviceOrSkipTestCase(info.feature);
   })
   .fn(t => {
-    const { format, attachmentCount, emptyAttachmentId } = t.params;
-    const componentCount = kTexelRepresentationInfo[format].componentOrder.length;
-    const info = kTextureFormatInfo[format];
+    t.fail('Test crashes');
+    // const { format, attachmentCount, emptyAttachmentId } = t.params;
+    // const componentCount = kTexelRepresentationInfo[format].componentOrder.length;
+    // const info = kTextureFormatInfo[format];
 
-    // We only need to test formats that have a valid color attachment bytes per sample.
-    const pixelByteCost = kTextureFormatInfo[format].colorRender?.byteCost;
-    t.skipIf(
-      pixelByteCost === undefined ||
-        computeBytesPerSampleFromFormats(range(attachmentCount, () => format)) >
-          t.device.limits.maxColorAttachmentBytesPerSample
-    );
+    // // We only need to test formats that have a valid color attachment bytes per sample.
+    // const pixelByteCost = kTextureFormatInfo[format].colorRender?.byteCost;
+    // t.skipIf(
+    //   pixelByteCost === undefined ||
+    //     computeBytesPerSampleFromFormats(range(attachmentCount, () => format)) >
+    //       t.device.limits.maxColorAttachmentBytesPerSample
+    // );
 
-    const writeValues =
-      info.color.type === 'sint' || info.color.type === 'uint'
-        ? attachmentsIntWriteValues
-        : attachmentsFloatWriteValues;
+    // const writeValues =
+    //   info.color.type === 'sint' || info.color.type === 'uint'
+    //     ? attachmentsIntWriteValues
+    //     : attachmentsFloatWriteValues;
 
-    const renderTargets = range(attachmentCount, () =>
-      t.createTextureTracked({
-        format,
-        size: { width: 1, height: 1, depthOrArrayLayers: 1 },
-        usage: GPUTextureUsage.COPY_SRC | GPUTextureUsage.RENDER_ATTACHMENT,
-      })
-    );
-    const pipeline = t.device.createRenderPipeline({
-      layout: 'auto',
-      vertex: {
-        module: t.device.createShaderModule({
-          code: kVertexShader,
-        }),
-        entryPoint: 'main',
-      },
-      fragment: {
-        module: t.device.createShaderModule({
-          code: getFragmentShaderCodeWithOutput(
-            range(attachmentCount, i =>
-              i === emptyAttachmentId
-                ? null
-                : {
-                    values: [
-                      writeValues[i].R,
-                      writeValues[i].G,
-                      writeValues[i].B,
-                      writeValues[i].A,
-                    ],
-                    plainType: getPlainTypeInfo(info.color.type),
-                    componentCount,
-                  }
-            )
-          ),
-        }),
-        entryPoint: 'main',
-        targets: range(attachmentCount, i => (i === emptyAttachmentId ? null : { format })),
-      },
-      primitive: { topology: 'triangle-list' },
-    });
+    // const renderTargets = range(attachmentCount, () =>
+    //   t.createTextureTracked({
+    //     format,
+    //     size: { width: 1, height: 1, depthOrArrayLayers: 1 },
+    //     usage: GPUTextureUsage.COPY_SRC | GPUTextureUsage.RENDER_ATTACHMENT,
+    //   })
+    // );
+    // const pipeline = t.device.createRenderPipeline({
+    //   layout: 'auto',
+    //   vertex: {
+    //     module: t.device.createShaderModule({
+    //       code: kVertexShader,
+    //     }),
+    //     entryPoint: 'main',
+    //   },
+    //   fragment: {
+    //     module: t.device.createShaderModule({
+    //       code: getFragmentShaderCodeWithOutput(
+    //         range(attachmentCount, i =>
+    //           i === emptyAttachmentId
+    //             ? null
+    //             : {
+    //                 values: [
+    //                   writeValues[i].R,
+    //                   writeValues[i].G,
+    //                   writeValues[i].B,
+    //                   writeValues[i].A,
+    //                 ],
+    //                 plainType: getPlainTypeInfo(info.color.type),
+    //                 componentCount,
+    //               }
+    //         )
+    //       ),
+    //     }),
+    //     entryPoint: 'main',
+    //     targets: range(attachmentCount, i => (i === emptyAttachmentId ? null : { format })),
+    //   },
+    //   primitive: { topology: 'triangle-list' },
+    // });
 
-    const encoder = t.device.createCommandEncoder();
-    const pass = encoder.beginRenderPass({
-      colorAttachments: range(attachmentCount, i =>
-        i === emptyAttachmentId
-          ? null
-          : {
-              view: renderTargets[i].createView(),
-              clearValue: { r: 0.5, g: 0.5, b: 0.5, a: 0.5 },
-              loadOp: 'clear',
-              storeOp: 'store',
-            }
-      ),
-    });
-    pass.setPipeline(pipeline);
-    pass.draw(3);
-    pass.end();
-    t.device.queue.submit([encoder.finish()]);
+    // const encoder = t.device.createCommandEncoder();
+    // const pass = encoder.beginRenderPass({
+    //   colorAttachments: range(attachmentCount, i =>
+    //     i === emptyAttachmentId
+    //       ? null
+    //       : {
+    //           view: renderTargets[i].createView(),
+    //           clearValue: { r: 0.5, g: 0.5, b: 0.5, a: 0.5 },
+    //           loadOp: 'clear',
+    //           storeOp: 'store',
+    //         }
+    //   ),
+    // });
+    // pass.setPipeline(pipeline);
+    // pass.draw(3);
+    // pass.end();
+    // t.device.queue.submit([encoder.finish()]);
 
-    for (let i = 0; i < attachmentCount; i++) {
-      if (i === emptyAttachmentId) {
-        continue;
-      }
-      t.expectSinglePixelComparisonsAreOkInTexture({ texture: renderTargets[i] }, [
-        { coord: { x: 0, y: 0 }, exp: writeValues[i] },
-      ]);
-    }
+    // for (let i = 0; i < attachmentCount; i++) {
+    //   if (i === emptyAttachmentId) {
+    //     continue;
+    //   }
+    //   t.expectSinglePixelComparisonsAreOkInTexture({ texture: renderTargets[i] }, [
+    //     { coord: { x: 0, y: 0 }, exp: writeValues[i] },
+    //   ]);
+    // }
   });
 
 g.test('color,component_count')
