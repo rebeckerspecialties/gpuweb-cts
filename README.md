@@ -14,7 +14,19 @@ To install dependencies for the conformance test suite, run the following comman
 npm install
 ```
 
+For ios:
+
+```
+pod install --project-directory=ios
+```
+
 The React Native portion of this test suite is built on top of [React Native Test App](https://github.com/microsoft/react-native-test-app). Build instructions for your target platform can be found here: https://github.com/microsoft/react-native-test-app/wiki/Quick-Start#platform-specific-instructions. The conformance test suite targets Hermes by default.
+
+To run on an ios simulator, run:
+
+```
+npm run ios
+```
 
 To run tests, click the "Run Tests" button on the app homepage. Once tests complete, the app will generate a summary of failed and skipped tests, along with a list of all tests that failed. The tests will take a few minutes to run. A log of the current running test can be viewed in the Metro console.
 
