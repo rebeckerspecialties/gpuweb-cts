@@ -41,14 +41,15 @@ g.test('buffer_reflection_attributes')
   .desc(`For every buffer attribute, the corresponding descriptor value is carried over.`)
   .paramsSubcasesOnly(u => u.combine('descriptor', kBufferSubcases))
   .fn(t => {
-    const { descriptor } = t.params;
+    t.fail('Test crashes');
+    // const { descriptor } = t.params;
 
-    t.expectValidationError(() => {
-      const buffer = t.createBufferTracked(descriptor);
+    // t.expectValidationError(() => {
+    //   const buffer = t.createBufferTracked(descriptor);
 
-      t.expect(buffer.size === descriptor.size);
-      t.expect(buffer.usage === descriptor.usage);
-    }, descriptor.invalid === true);
+    //   t.expect(buffer.size === descriptor.size);
+    //   t.expect(buffer.usage === descriptor.usage);
+    // }, descriptor.invalid === true);
   });
 
 g.test('buffer_creation_from_reflection')
@@ -146,33 +147,34 @@ g.test('texture_reflection_attributes')
   .desc(`For every texture attribute, the corresponding descriptor value is carried over.`)
   .paramsSubcasesOnly(u => u.combine('descriptor', kTextureSubcases))
   .fn(t => {
-    const { descriptor } = t.params;
+    t.fail('Test crashes');
+    // const { descriptor } = t.params;
 
-    let width: number;
-    let height: number;
-    let depthOrArrayLayers: number;
-    if (Array.isArray(descriptor.size)) {
-      width = descriptor.size[0];
-      height = descriptor.size[1] || 1;
-      depthOrArrayLayers = descriptor.size[2] || 1;
-    } else {
-      width = (descriptor.size as GPUExtent3DDict).width;
-      height = (descriptor.size as GPUExtent3DDict).height || 1;
-      depthOrArrayLayers = (descriptor.size as GPUExtent3DDict).depthOrArrayLayers || 1;
-    }
+    // let width: number;
+    // let height: number;
+    // let depthOrArrayLayers: number;
+    // if (Array.isArray(descriptor.size)) {
+    //   width = descriptor.size[0];
+    //   height = descriptor.size[1] || 1;
+    //   depthOrArrayLayers = descriptor.size[2] || 1;
+    // } else {
+    //   width = (descriptor.size as GPUExtent3DDict).width;
+    //   height = (descriptor.size as GPUExtent3DDict).height || 1;
+    //   depthOrArrayLayers = (descriptor.size as GPUExtent3DDict).depthOrArrayLayers || 1;
+    // }
 
-    t.expectValidationError(() => {
-      const texture = t.createTextureTracked(descriptor);
+    // t.expectValidationError(() => {
+    //   const texture = t.createTextureTracked(descriptor);
 
-      t.expect(texture.width === width);
-      t.expect(texture.height === height);
-      t.expect(texture.depthOrArrayLayers === depthOrArrayLayers);
-      t.expect(texture.format === descriptor.format);
-      t.expect(texture.usage === descriptor.usage);
-      t.expect(texture.dimension === (descriptor.dimension || '2d'));
-      t.expect(texture.mipLevelCount === (descriptor.mipLevelCount || 1));
-      t.expect(texture.sampleCount === (descriptor.sampleCount || 1));
-    }, descriptor.invalid === true);
+    //   t.expect(texture.width === width);
+    //   t.expect(texture.height === height);
+    //   t.expect(texture.depthOrArrayLayers === depthOrArrayLayers);
+    //   t.expect(texture.format === descriptor.format);
+    //   t.expect(texture.usage === descriptor.usage);
+    //   t.expect(texture.dimension === (descriptor.dimension || '2d'));
+    //   t.expect(texture.mipLevelCount === (descriptor.mipLevelCount || 1));
+    //   t.expect(texture.sampleCount === (descriptor.sampleCount || 1));
+    // }, descriptor.invalid === true);
   });
 
 interface TextureWithSize extends GPUTexture {
@@ -242,14 +244,15 @@ g.test('query_set_reflection_attributes')
   .desc(`For every queue attribute, the corresponding descriptor value is carried over.`)
   .paramsSubcasesOnly(u => u.combine('descriptor', kQuerySetSubcases))
   .fn(t => {
-    const { descriptor } = t.params;
+    t.fail('Test crashes');
+    // const { descriptor } = t.params;
 
-    t.expectValidationError(() => {
-      const querySet = t.createQuerySetTracked(descriptor);
+    // t.expectValidationError(() => {
+    //   const querySet = t.createQuerySetTracked(descriptor);
 
-      t.expect(querySet.type === descriptor.type);
-      t.expect(querySet.count === descriptor.count);
-    }, descriptor.invalid === true);
+    //   t.expect(querySet.type === descriptor.type);
+    //   t.expect(querySet.count === descriptor.count);
+    // }, descriptor.invalid === true);
   });
 
 g.test('query_set_creation_from_reflection')
