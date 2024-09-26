@@ -37,9 +37,9 @@ For the `react-native-wgpu` library, there are a few blockers for generating a f
 - `webgpu/api/operation/adapter`: Main thread hangs on a promise await. See: https://github.com/wcandillon/react-native-webgpu/issues/126
 - `webgpu/api/operation/buffers`: `map.spec` and `map_oom.spec` have tests that crash when trying to allocate a buffer. `remapped_for_write`, `mappedAtCreation,mapState`, `mapAsync,mapState`, `mappedAtCreation`.
 - `webgpu/api/operation/command_buffer`: Tests with compressed texture formats seem to hang indefinitely (e.g. astc-4x4-unorm). Tests following the copyTextureToTexture tests all seem to time out, possibly due to the depth32float_stencil8 format.
-- `webgpu/api/operation/memory_sync`: The "either" interpolation option is not supported, causing shader compilation to crash. Shader compilation crashes should likely not crash the app.
+- `webgpu/api/operation/memory_sync`: The "either" interpolation option is not supported, causing shader compilation to crash. Shader compilation crashes should likely not crash the app. Tests run to completion when Dawn is updated to v6592+.
 - `webgpu/api/operation/render_pipeline`: Tests crash with an unknown error in `pipeline_output_targets.spec`.
-- `webgpu/api/operation/rendering`: Same as `memory_sync` tests.
+- `webgpu/api/operation/rendering`: Same shader compilation issue as `memory_sync` tests. depth_clip_clamp has a hang when mapping buffer data asynchronously.
 - `webgpu/api/operation/shader_module`: Different shader compilation issue.
 - `webgpu/api/operation/storage_texture`: Same as `memory_sync` tests.
 - `webgpu/api/operation/vertex_state`: Same as `memory_sync` tests.
