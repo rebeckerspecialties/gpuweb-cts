@@ -2009,70 +2009,71 @@ aspect and copyTextureToBuffer() with depth aspect.
   )
   .beforeAllSubcases(t => {
     const info = kTextureFormatInfo[t.params.format];
-    t.selectDeviceOrSkipTestCase(info.feature);
+    // t.selectDeviceOrSkipTestCase(info.feature);
   })
   .fn(t => {
-    const {
-      format,
-      copyMethod,
-      aspect,
-      bytesPerRowPadding,
-      rowsPerImagePadding,
-      copyWidthInBlocks,
-      copyHeightInBlocks,
-      copyDepth,
-      mipLevel,
-    } = t.params;
-    const bytesPerBlock = depthStencilFormatAspectSize(format, aspect);
-    const rowsPerImage = copyHeightInBlocks + rowsPerImagePadding;
+    t.fail('Depth stencil tests not supported');
+    // const {
+    //   format,
+    //   copyMethod,
+    //   aspect,
+    //   bytesPerRowPadding,
+    //   rowsPerImagePadding,
+    //   copyWidthInBlocks,
+    //   copyHeightInBlocks,
+    //   copyDepth,
+    //   mipLevel,
+    // } = t.params;
+    // const bytesPerBlock = depthStencilFormatAspectSize(format, aspect);
+    // const rowsPerImage = copyHeightInBlocks + rowsPerImagePadding;
 
-    const bytesPerRowAlignment = copyMethod === 'WriteTexture' ? 1 : kBytesPerRowAlignment;
-    const bytesPerRow =
-      align(bytesPerBlock * copyWidthInBlocks, bytesPerRowAlignment) +
-      bytesPerRowPadding * bytesPerRowAlignment;
+    // const bytesPerRowAlignment = copyMethod === 'WriteTexture' ? 1 : kBytesPerRowAlignment;
+    // const bytesPerRow =
+    //   align(bytesPerBlock * copyWidthInBlocks, bytesPerRowAlignment) +
+    //   bytesPerRowPadding * bytesPerRowAlignment;
 
-    const copySize = [copyWidthInBlocks, copyHeightInBlocks, copyDepth] as const;
-    const textureSize = [
-      copyWidthInBlocks << mipLevel,
-      copyHeightInBlocks << mipLevel,
-      copyDepth,
-    ] as const;
-    if (copyMethod === 'CopyT2B') {
-      if (aspect === 'depth-only') {
-        t.DoCopyTextureToBufferWithDepthAspectTest(
-          format,
-          copySize,
-          bytesPerRowPadding,
-          rowsPerImagePadding,
-          0,
-          0,
-          mipLevel
-        );
-      } else {
-        t.DoCopyFromStencilTest(format, textureSize, bytesPerRow, rowsPerImage, 0, mipLevel);
-      }
-    } else {
-      assert(
-        aspect === 'stencil-only' && (copyMethod === 'CopyB2T' || copyMethod === 'WriteTexture')
-      );
-      const initialDataSize = dataBytesForCopyOrFail({
-        layout: { bytesPerRow, rowsPerImage },
-        format: 'stencil8',
-        copySize,
-        method: copyMethod,
-      });
+    // const copySize = [copyWidthInBlocks, copyHeightInBlocks, copyDepth] as const;
+    // const textureSize = [
+    //   copyWidthInBlocks << mipLevel,
+    //   copyHeightInBlocks << mipLevel,
+    //   copyDepth,
+    // ] as const;
+    // if (copyMethod === 'CopyT2B') {
+    //   if (aspect === 'depth-only') {
+    //     t.DoCopyTextureToBufferWithDepthAspectTest(
+    //       format,
+    //       copySize,
+    //       bytesPerRowPadding,
+    //       rowsPerImagePadding,
+    //       0,
+    //       0,
+    //       mipLevel
+    //     );
+    //   } else {
+    //     t.DoCopyFromStencilTest(format, textureSize, bytesPerRow, rowsPerImage, 0, mipLevel);
+    //   }
+    // } else {
+    //   assert(
+    //     aspect === 'stencil-only' && (copyMethod === 'CopyB2T' || copyMethod === 'WriteTexture')
+    //   );
+    //   const initialDataSize = dataBytesForCopyOrFail({
+    //     layout: { bytesPerRow, rowsPerImage },
+    //     format: 'stencil8',
+    //     copySize,
+    //     method: copyMethod,
+    //   });
 
-      t.DoUploadToStencilTest(
-        format,
-        textureSize,
-        copyMethod,
-        bytesPerRow,
-        rowsPerImage,
-        initialDataSize,
-        0,
-        mipLevel
-      );
-    }
+    //   t.DoUploadToStencilTest(
+    //     format,
+    //     textureSize,
+    //     copyMethod,
+    //     bytesPerRow,
+    //     rowsPerImage,
+    //     initialDataSize,
+    //     0,
+    //     mipLevel
+    //   );
+    // }
   });
 
 g.test('offsets_and_sizes_copy_depth_stencil')
@@ -2100,51 +2101,52 @@ copyTextureToBuffer() with depth aspect.
   )
   .beforeAllSubcases(t => {
     const info = kTextureFormatInfo[t.params.format];
-    t.selectDeviceOrSkipTestCase(info.feature);
+    // t.selectDeviceOrSkipTestCase(info.feature);
   })
   .fn(t => {
-    const { format, copyMethod, aspect, offsetInBlocks, dataPaddingInBytes, copyDepth, mipLevel } =
-      t.params;
-    const bytesPerBlock = depthStencilFormatAspectSize(format, aspect);
-    const initialDataOffset = offsetInBlocks * bytesPerBlock;
-    const copySize = [3, 3, copyDepth] as const;
-    const rowsPerImage = 3;
-    const bytesPerRow = 256;
+    t.fail('depth stencil tests not supported');
+    // const { format, copyMethod, aspect, offsetInBlocks, dataPaddingInBytes, copyDepth, mipLevel } =
+    //   t.params;
+    // const bytesPerBlock = depthStencilFormatAspectSize(format, aspect);
+    // const initialDataOffset = offsetInBlocks * bytesPerBlock;
+    // const copySize = [3, 3, copyDepth] as const;
+    // const rowsPerImage = 3;
+    // const bytesPerRow = 256;
 
-    const textureSize = [copySize[0] << mipLevel, copySize[1] << mipLevel, copyDepth] as const;
-    if (copyMethod === 'CopyT2B') {
-      if (aspect === 'depth-only') {
-        t.DoCopyTextureToBufferWithDepthAspectTest(format, copySize, 0, 0, 0, 0, mipLevel);
-      } else {
-        t.DoCopyFromStencilTest(
-          format,
-          textureSize,
-          bytesPerRow,
-          rowsPerImage,
-          initialDataOffset,
-          mipLevel
-        );
-      }
-    } else {
-      assert(
-        aspect === 'stencil-only' && (copyMethod === 'CopyB2T' || copyMethod === 'WriteTexture')
-      );
-      const minDataSize = dataBytesForCopyOrFail({
-        layout: { offset: initialDataOffset, bytesPerRow, rowsPerImage },
-        format: 'stencil8',
-        copySize,
-        method: copyMethod,
-      });
-      const initialDataSize = minDataSize + dataPaddingInBytes;
-      t.DoUploadToStencilTest(
-        format,
-        textureSize,
-        copyMethod,
-        bytesPerRow,
-        rowsPerImage,
-        initialDataSize,
-        initialDataOffset,
-        mipLevel
-      );
-    }
+    // const textureSize = [copySize[0] << mipLevel, copySize[1] << mipLevel, copyDepth] as const;
+    // if (copyMethod === 'CopyT2B') {
+    //   if (aspect === 'depth-only') {
+    //     t.DoCopyTextureToBufferWithDepthAspectTest(format, copySize, 0, 0, 0, 0, mipLevel);
+    //   } else {
+    //     t.DoCopyFromStencilTest(
+    //       format,
+    //       textureSize,
+    //       bytesPerRow,
+    //       rowsPerImage,
+    //       initialDataOffset,
+    //       mipLevel
+    //     );
+    //   }
+    // } else {
+    //   assert(
+    //     aspect === 'stencil-only' && (copyMethod === 'CopyB2T' || copyMethod === 'WriteTexture')
+    //   );
+    //   const minDataSize = dataBytesForCopyOrFail({
+    //     layout: { offset: initialDataOffset, bytesPerRow, rowsPerImage },
+    //     format: 'stencil8',
+    //     copySize,
+    //     method: copyMethod,
+    //   });
+    //   const initialDataSize = minDataSize + dataPaddingInBytes;
+    //   t.DoUploadToStencilTest(
+    //     format,
+    //     textureSize,
+    //     copyMethod,
+    //     bytesPerRow,
+    //     rowsPerImage,
+    //     initialDataSize,
+    //     initialDataOffset,
+    //     mipLevel
+    //   );
+    // }
   });

@@ -56,9 +56,16 @@ g.test('stencil_clear_value')
   .beforeAllSubcases(t => {
     const { stencilFormat } = t.params;
     const info = kTextureFormatInfo[stencilFormat];
-    t.selectDeviceOrSkipTestCase(info.feature);
+    if (stencilFormat !== 'depth32float-stencil8') {
+      t.selectDeviceOrSkipTestCase(info.feature);
+    }
   })
   .fn(t => {
+    if (t.params.stencilFormat === 'depth32float-stencil8') {
+      t.fail('stencil format not supported');
+      return;
+    }
+
     const { stencilFormat, stencilClearValue, applyStencilClearValueAsStencilReferenceValue } =
       t.params;
 
