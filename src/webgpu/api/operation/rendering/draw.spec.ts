@@ -348,11 +348,16 @@ Params:
       .expand('base_vertex', p => (p.indexed ? ([0, 9] as const) : [undefined]))
   )
   .beforeAllSubcases(t => {
-    if (t.params.first_instance > 0 && t.params.indirect) {
-      t.selectDeviceOrSkipTestCase('indirect-first-instance');
-    }
+    // if (t.params.first_instance > 0 && t.params.indirect) {
+    //   t.selectDeviceOrSkipTestCase('indirect-first-instance');
+    // }
   })
   .fn(t => {
+    if (t.params.base_vertex === 9 || t.params.first_instance > 0) {
+      t.fail('draw not supported for params');
+      return;
+    }
+
     t.checkTriangleDraw({
       firstIndex: t.params.first,
       count: t.params.count,
@@ -387,21 +392,22 @@ g.test('default_arguments')
       )
   )
   .fn(t => {
-    const kVertexCount = 3;
-    const kVertexBufferOffset = 32;
-    const kIndexBufferOffset = 16;
+    t.fail('default arguments not supported');
+    // const kVertexCount = 3;
+    // const kVertexBufferOffset = 32;
+    // const kIndexBufferOffset = 16;
 
-    t.checkTriangleDraw({
-      firstIndex: t.params.first_index,
-      count: kVertexCount,
-      firstInstance: t.params.first_instance,
-      instanceCount: t.params.instance_count,
-      indexed: t.params.mode === 'drawIndexed',
-      indirect: false, // indirect
-      vertexBufferOffset: kVertexBufferOffset,
-      indexBufferOffset: kIndexBufferOffset,
-      baseVertex: t.params.base_vertex,
-    });
+    // t.checkTriangleDraw({
+    //   firstIndex: t.params.first_index,
+    //   count: kVertexCount,
+    //   firstInstance: t.params.first_instance,
+    //   instanceCount: t.params.instance_count,
+    //   indexed: t.params.mode === 'drawIndexed',
+    //   indirect: false, // indirect
+    //   vertexBufferOffset: kVertexBufferOffset,
+    //   indexBufferOffset: kIndexBufferOffset,
+    //   baseVertex: t.params.base_vertex,
+    // });
   });
 
 g.test('vertex_attributes,basic')

@@ -337,9 +337,15 @@ g.test('depth_compare_func')
       ] as const)
   )
   .beforeAllSubcases(t => {
-    t.selectDeviceForTextureFormatOrSkipTestCase(t.params.format);
+    if (t.params.format !== 'depth32float-stencil8') {
+      t.selectDeviceForTextureFormatOrSkipTestCase(t.params.format);
+    }
   })
   .fn(t => {
+    if (t.params.format === 'depth32float-stencil8') {
+      t.fail('Unsupported format depth32float-stencil8');
+      return;
+    }
     const { depthCompare, depthClearValue, _expected, format } = t.params;
 
     const colorAttachmentFormat = 'rgba8unorm';

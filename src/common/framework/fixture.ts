@@ -162,9 +162,13 @@ export class Fixture<S extends SubcaseBatchState = SubcaseBatchState> {
     if (o instanceof GPUDevice) {
       this.objectsToCleanUp.push({
         async destroyAsync() {
+          o.queue.submit([]);
           o.destroy();
           // TODO FIXME: awaiting device.lost a second time causes promise to hang
           // await o.lost;
+          await new Promise<void>(resolve => {
+            setTimeout(resolve, 5);
+          });
         },
       });
     } else {

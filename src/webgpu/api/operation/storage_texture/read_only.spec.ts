@@ -577,7 +577,7 @@ g.test('basic')
   )
   .beforeAllSubcases(t => {
     if (t.params.format === 'bgra8unorm') {
-      t.selectDeviceOrSkipTestCase('bgra8unorm-storage');
+      t.skipIfCopyTextureToTextureNotSupportedForFormat(t.params.format);
     }
     if (t.isCompatibility) {
       t.skipIfTextureFormatNotUsableAsStorageTexture(t.params.format);

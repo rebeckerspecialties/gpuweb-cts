@@ -1262,9 +1262,16 @@ g.test('copy_depth_stencil')
   )
   .beforeAllSubcases(t => {
     const { format } = t.params;
-    t.selectDeviceForTextureFormatOrSkipTestCase(format);
+    if (t.params.format !== 'depth32float-stencil8') {
+      t.selectDeviceForTextureFormatOrSkipTestCase(format);
+    }
   })
   .fn(t => {
+    if (t.params.format === 'depth32float-stencil8') {
+      t.fail('depth32float-stencil8 not supported');
+      return;
+    }
+
     const {
       format,
       srcTextureSize,

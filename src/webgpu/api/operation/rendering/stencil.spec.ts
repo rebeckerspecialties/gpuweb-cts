@@ -301,9 +301,15 @@ g.test('stencil_compare_func')
       ] as const)
   )
   .beforeAllSubcases(t => {
-    t.selectDeviceForTextureFormatOrSkipTestCase(t.params.format);
+    if (t.params.format !== 'depth32float-stencil8')
+      t.selectDeviceForTextureFormatOrSkipTestCase(t.params.format);
   })
   .fn(t => {
+    if (t.params.format === 'depth32float-stencil8') {
+      t.fail('stencil format causes crash');
+      return;
+    }
+
     const { format, stencilCompare, stencilRefValue, _expectedColor } = t.params;
 
     t.checkStencilCompareFunction(format, stencilCompare, stencilRefValue, _expectedColor);
@@ -339,9 +345,15 @@ g.test('stencil_passOp_operation')
       ] as const)
   )
   .beforeAllSubcases(t => {
-    t.selectDeviceForTextureFormatOrSkipTestCase(t.params.format);
+    if (t.params.format !== 'depth32float-stencil8')
+      t.selectDeviceForTextureFormatOrSkipTestCase(t.params.format);
   })
   .fn(t => {
+    if (t.params.format === 'depth32float-stencil8') {
+      t.fail('stencil format causes crash');
+      return;
+    }
+
     const { format, passOp, initialStencil, _expectedStencil } = t.params;
 
     const stencilState = {
@@ -384,9 +396,14 @@ g.test('stencil_failOp_operation')
       ] as const)
   )
   .beforeAllSubcases(t => {
-    t.selectDeviceForTextureFormatOrSkipTestCase(t.params.format);
+    if (t.params.format !== 'depth32float-stencil8')
+      t.selectDeviceForTextureFormatOrSkipTestCase(t.params.format);
   })
   .fn(t => {
+    if (t.params.format === 'depth32float-stencil8') {
+      t.fail('stencil format causes crash');
+      return;
+    }
     const { format, failOp, initialStencil, _expectedStencil } = t.params;
 
     const stencilState = {
@@ -438,9 +455,14 @@ g.test('stencil_depthFailOp_operation')
       ] as const)
   )
   .beforeAllSubcases(t => {
-    t.selectDeviceForTextureFormatOrSkipTestCase(t.params.format);
+    if (t.params.format !== 'depth32float-stencil8')
+      t.selectDeviceForTextureFormatOrSkipTestCase(t.params.format);
   })
   .fn(t => {
+    if (t.params.format === 'depth32float-stencil8') {
+      t.fail('stencil format causes crash');
+      return;
+    }
     const { format, depthFailOp, initialStencil, _expectedStencil } = t.params;
 
     const stencilState = {
@@ -484,9 +506,14 @@ g.test('stencil_read_write_mask')
       ])
   )
   .beforeAllSubcases(t => {
-    t.selectDeviceForTextureFormatOrSkipTestCase(t.params.format);
+    if (t.params.format !== 'depth32float-stencil8')
+      t.selectDeviceForTextureFormatOrSkipTestCase(t.params.format);
   })
   .fn(t => {
+    if (t.params.format === 'depth32float-stencil8') {
+      t.fail('stencil format causes crash');
+      return;
+    }
     const { format, maskType, stencilRefValue, _expectedColor } = t.params;
 
     const baseStencilState = {
@@ -534,9 +561,14 @@ g.test('stencil_reference_initialized')
   .desc('Test that stencil reference is initialized as zero for new render pass.')
   .params(u => u.combine('format', kStencilFormats))
   .beforeAllSubcases(t => {
-    t.selectDeviceForTextureFormatOrSkipTestCase(t.params.format);
+    if (t.params.format !== 'depth32float-stencil8')
+      t.selectDeviceForTextureFormatOrSkipTestCase(t.params.format);
   })
   .fn(t => {
+    if (t.params.format === 'depth32float-stencil8') {
+      t.fail('stencil format causes crash');
+      return;
+    }
     const { format } = t.params;
 
     const baseStencilState = {
