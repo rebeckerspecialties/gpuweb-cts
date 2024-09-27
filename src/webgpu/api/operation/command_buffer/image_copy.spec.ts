@@ -1637,9 +1637,14 @@ for all formats. We pass origin and copyExtent as [number, number, number].`
   .beforeAllSubcases(t => {
     const info = kTextureFormatInfo[t.params.format];
     t.skipIfTextureFormatNotSupported(t.params.format);
+
     t.selectDeviceOrSkipTestCase(info.feature);
   })
   .fn(t => {
+    if (t.params.checkMethod === 'PartialCopyT2B') {
+      t.fail('PartialCopyT2B is flaky');
+      return;
+    }
     const {
       originValueInBlocks,
       copySizeValueInBlocks,
