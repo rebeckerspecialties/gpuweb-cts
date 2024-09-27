@@ -655,24 +655,25 @@ g.test('vertex_format_to_shader_format_conversion')
       ])
   )
   .fn(t => {
-    const { format, shaderComponentCount, slotVariant, shaderLocationVariant } = t.params;
-    const slot = t.makeLimitVariant('maxVertexBuffers', slotVariant);
-    const shaderLocation = t.makeLimitVariant('maxVertexAttributes', shaderLocationVariant);
-    t.runTest([
-      {
-        slot,
-        arrayStride: 16,
-        stepMode: 'vertex',
-        attributes: [
-          {
-            shaderLocation,
-            format,
-            offset: 0,
-            shaderComponentCount,
-          },
-        ],
-      },
-    ]);
+    t.fail('vertex_format_to_shader_format_conversion crashes');
+    // const { format, shaderComponentCount, slotVariant, shaderLocationVariant } = t.params;
+    // const slot = t.makeLimitVariant('maxVertexBuffers', slotVariant);
+    // const shaderLocation = t.makeLimitVariant('maxVertexAttributes', shaderLocationVariant);
+    // t.runTest([
+    //   {
+    //     slot,
+    //     arrayStride: 16,
+    //     stepMode: 'vertex',
+    //     attributes: [
+    //       {
+    //         shaderLocation,
+    //         format,
+    //         offset: 0,
+    //         shaderComponentCount,
+    //       },
+    //     ],
+    //   },
+    // ]);
   });
 
 g.test('setVertexBuffer_offset_and_attribute_offset')
@@ -1127,30 +1128,31 @@ g.test('array_stride_zero')
 g.test('discontiguous_location_and_attribs')
   .desc('Test that using far away slots / shaderLocations works as expected')
   .fn(t => {
-    t.runTest([
-      {
-        slot: t.device.limits.maxVertexBuffers - 1,
-        arrayStride: 4,
-        stepMode: 'vertex',
-        attributes: [
-          { format: 'uint8x2', offset: 2, shaderLocation: 0 },
-          { format: 'uint8x2', offset: 0, shaderLocation: 8 },
-        ],
-      },
-      {
-        slot: 1,
-        arrayStride: 16,
-        stepMode: 'instance',
-        vbOffset: 1000,
-        attributes: [
-          {
-            format: 'uint32x4',
-            offset: 0,
-            shaderLocation: t.device.limits.maxVertexAttributes - 1,
-          },
-        ],
-      },
-    ]);
+    t.fail('discontiguous location and attribs crash');
+    // t.runTest([
+    //   {
+    //     slot: t.device.limits.maxVertexBuffers - 1,
+    //     arrayStride: 4,
+    //     stepMode: 'vertex',
+    //     attributes: [
+    //       { format: 'uint8x2', offset: 2, shaderLocation: 0 },
+    //       { format: 'uint8x2', offset: 0, shaderLocation: 8 },
+    //     ],
+    //   },
+    //   {
+    //     slot: 1,
+    //     arrayStride: 16,
+    //     stepMode: 'instance',
+    //     vbOffset: 1000,
+    //     attributes: [
+    //       {
+    //         format: 'uint32x4',
+    //         offset: 0,
+    //         shaderLocation: t.device.limits.maxVertexAttributes - 1,
+    //       },
+    //     ],
+    //   },
+    // ]);
   });
 
 g.test('overlapping_attributes')

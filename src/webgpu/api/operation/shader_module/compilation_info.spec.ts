@@ -90,36 +90,37 @@ g.test('getCompilationInfo_returns')
   )
   .params(u => u.combineWithParams(kAllShaderSources))
   .fn(async t => {
-    const { _code, valid } = t.params;
+    t.fail('shader_module line_number_and_position validation fails');
+    // const { _code, valid } = t.params;
 
-    const shaderModule = t.expectGPUError(
-      'validation',
-      () => {
-        return t.device.createShaderModule({ code: _code });
-      },
-      !valid
-    );
+    // const shaderModule = t.expectGPUError(
+    //   'validation',
+    //   () => {
+    //     return t.device.createShaderModule({ code: _code });
+    //   },
+    //   !valid
+    // );
 
-    const info = await shaderModule.getCompilationInfo();
+    // const info = await shaderModule.getCompilationInfo();
 
-    t.expect(
-      info instanceof GPUCompilationInfo,
-      'Expected a GPUCompilationInfo object to be returned'
-    );
+    // t.expect(
+    //   info instanceof GPUCompilationInfo,
+    //   'Expected a GPUCompilationInfo object to be returned'
+    // );
 
-    // Expect that we get zero error messages from a valid shader.
-    // Message types other than errors are OK.
-    let errorCount = 0;
-    for (const message of info.messages) {
-      if (message.type === 'error') {
-        errorCount++;
-      }
-    }
-    if (valid) {
-      t.expect(errorCount === 0, "Expected zero GPUCompilationMessages of type 'error'");
-    } else {
-      t.expect(errorCount > 0, "Expected at least one GPUCompilationMessages of type 'error'");
-    }
+    // // Expect that we get zero error messages from a valid shader.
+    // // Message types other than errors are OK.
+    // let errorCount = 0;
+    // for (const message of info.messages) {
+    //   if (message.type === 'error') {
+    //     errorCount++;
+    //   }
+    // }
+    // if (valid) {
+    //   t.expect(errorCount === 0, "Expected zero GPUCompilationMessages of type 'error'");
+    // } else {
+    //   t.expect(errorCount > 0, "Expected at least one GPUCompilationMessages of type 'error'");
+    // }
   });
 
 g.test('line_number_and_position')
@@ -133,46 +134,47 @@ g.test('line_number_and_position')
   )
   .params(u => u.combineWithParams(kInvalidShaderSources))
   .fn(async t => {
-    const { _code, _errorLine, _errorLinePos } = t.params;
+    t.fail('shader_module line_number_and_position validation fails');
+    // const { _code, _errorLine, _errorLinePos } = t.params;
 
-    const shaderModule = t.expectGPUError('validation', () => {
-      return t.device.createShaderModule({ code: _code });
-    });
+    // const shaderModule = t.expectGPUError('validation', () => {
+    //   return t.device.createShaderModule({ code: _code });
+    // });
 
-    const info = await shaderModule.getCompilationInfo();
+    // const info = await shaderModule.getCompilationInfo();
 
-    let foundAppropriateError = false;
-    for (const message of info.messages) {
-      if (message.type === 'error') {
-        // Some backends may not be able to indicate a precise location for the error. In those
-        // cases a line and position of 0 should be reported.
-        // If a line is reported, it should point at the correct line (1-based).
-        t.expect(
-          (message.lineNum === 0) === (message.linePos === 0),
-          `Got message.lineNum ${message.lineNum}, .linePos ${message.linePos}, but GPUCompilationMessage should specify both or neither`
-        );
+    // let foundAppropriateError = false;
+    // for (const message of info.messages) {
+    //   if (message.type === 'error') {
+    //     // Some backends may not be able to indicate a precise location for the error. In those
+    //     // cases a line and position of 0 should be reported.
+    //     // If a line is reported, it should point at the correct line (1-based).
+    //     t.expect(
+    //       (message.lineNum === 0) === (message.linePos === 0),
+    //       `Got message.lineNum ${message.lineNum}, .linePos ${message.linePos}, but GPUCompilationMessage should specify both or neither`
+    //     );
 
-        if (message.lineNum === 0) {
-          foundAppropriateError = true;
-          break;
-        }
+    //     if (message.lineNum === 0) {
+    //       foundAppropriateError = true;
+    //       break;
+    //     }
 
-        if (message.lineNum === _errorLine) {
-          foundAppropriateError = true;
-          if (_errorLinePos !== undefined) {
-            t.expect(
-              message.linePos === _errorLinePos,
-              `Got message.linePos ${message.linePos}, expected ${_errorLinePos}`
-            );
-          }
-          break;
-        }
-      }
-    }
-    t.expect(
-      foundAppropriateError,
-      'Expected to find an error which corresponded with the erroneous line'
-    );
+    //     if (message.lineNum === _errorLine) {
+    //       foundAppropriateError = true;
+    //       if (_errorLinePos !== undefined) {
+    //         t.expect(
+    //           message.linePos === _errorLinePos,
+    //           `Got message.linePos ${message.linePos}, expected ${_errorLinePos}`
+    //         );
+    //       }
+    //       break;
+    //     }
+    //   }
+    // }
+    // t.expect(
+    //   foundAppropriateError,
+    //   'Expected to find an error which corresponded with the erroneous line'
+    // );
   });
 
 g.test('offset_and_length')
@@ -184,40 +186,41 @@ g.test('offset_and_length')
   )
   .params(u => u.combineWithParams(kAllShaderSources))
   .fn(async t => {
-    const { _code, valid } = t.params;
+    t.fail('shader_module offset_and_length validation fails');
+    // const { _code, valid } = t.params;
 
-    const shaderModule = t.expectGPUError(
-      'validation',
-      () => {
-        return t.device.createShaderModule({ code: _code });
-      },
-      !valid
-    );
+    // const shaderModule = t.expectGPUError(
+    //   'validation',
+    //   () => {
+    //     return t.device.createShaderModule({ code: _code });
+    //   },
+    //   !valid
+    // );
 
-    const info = await shaderModule.getCompilationInfo();
+    // const info = await shaderModule.getCompilationInfo();
 
-    for (const message of info.messages) {
-      // Any offsets and lengths should reference valid spans of the shader code.
-      t.expect(
-        message.offset <= _code.length && message.offset + message.length <= _code.length,
-        'message.offset and .length should be within the shader source'
-      );
+    // for (const message of info.messages) {
+    //   // Any offsets and lengths should reference valid spans of the shader code.
+    //   t.expect(
+    //     message.offset <= _code.length && message.offset + message.length <= _code.length,
+    //     'message.offset and .length should be within the shader source'
+    //   );
 
-      // If a valid line number and position are given, the offset should point the the same
-      // location in the shader source.
-      if (message.lineNum !== 0 && message.linePos !== 0) {
-        let lineOffset = 0;
-        for (let i = 0; i < message.lineNum - 1; ++i) {
-          lineOffset = _code.indexOf('\n', lineOffset);
-          assert(lineOffset !== -1);
-          lineOffset += 1;
-        }
+    //   // If a valid line number and position are given, the offset should point the the same
+    //   // location in the shader source.
+    //   if (message.lineNum !== 0 && message.linePos !== 0) {
+    //     let lineOffset = 0;
+    //     for (let i = 0; i < message.lineNum - 1; ++i) {
+    //       lineOffset = _code.indexOf('\n', lineOffset);
+    //       assert(lineOffset !== -1);
+    //       lineOffset += 1;
+    //     }
 
-        const expectedOffset = lineOffset + message.linePos - 1;
-        t.expect(
-          message.offset === expectedOffset,
-          `message.lineNum (${message.lineNum}) and .linePos (${message.linePos}) point to a different offset (${lineOffset} + ${message.linePos} - 1 = ${expectedOffset}) than .offset (${message.offset})`
-        );
-      }
-    }
+    //     const expectedOffset = lineOffset + message.linePos - 1;
+    //     t.expect(
+    //       message.offset === expectedOffset,
+    //       `message.lineNum (${message.lineNum}) and .linePos (${message.linePos}) point to a different offset (${lineOffset} + ${message.linePos} - 1 = ${expectedOffset}) than .offset (${message.offset})`
+    //     );
+    //   }
+    // }
   });
