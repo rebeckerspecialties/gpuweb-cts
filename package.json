@@ -45,6 +45,7 @@
   "dependencies": {
     "react": "18.3.1",
     "react-native": "0.75.0",
+    "react-native-share": "^11.0.3",
     "react-native-wgpu": "^0.1.7"
   },
   "devDependencies": {

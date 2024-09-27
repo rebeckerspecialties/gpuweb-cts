@@ -3,8 +3,9 @@ import { Button, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { runTests } from './runTests';
 import { Canvas, useCanvasEffect } from 'react-native-wgpu';
 import { LiveTestCaseResult } from '../common/internal/logging/result';
+import { ExportButton } from './ExportButton';
 
-type Results = {
+export type CTSResults = {
   failed: [string, LiveTestCaseResult][];
   warned: [string, LiveTestCaseResult][];
   skipped: [string, LiveTestCaseResult][];
@@ -12,7 +13,7 @@ type Results = {
 };
 
 export const TestTree: React.FC = () => {
-  const [results, setResults] = useState<Results>({
+  const [results, setResults] = useState<CTSResults>({
     failed: [],
     warned: [],
     skipped: [],
@@ -44,6 +45,7 @@ export const TestTree: React.FC = () => {
           <Text>Failed: {results.failed.length}</Text>
           <Text>Warned: {results.warned.length}</Text>
           <Text>Skipped: {results.skipped.length}</Text>
+          <ExportButton results={results} />
         </View>
       ) : null}
       {results.failed.length > 0 ? (
