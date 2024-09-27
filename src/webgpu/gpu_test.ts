@@ -259,6 +259,7 @@ export class GPUTestSubcaseBatchState extends SubcaseBatchState {
       if (format && !isTextureFormatUsableAsStorageFormat(format, this.isCompatibility)) {
         this.skip(`Texture with ${format} is not usable as a storage texture`);
       }
+      this.skipIfCopyTextureToTextureNotSupportedForFormat(...formats);
     }
   }
 
