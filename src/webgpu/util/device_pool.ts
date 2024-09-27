@@ -81,10 +81,14 @@ export class DevicePool {
       // created for the next test.
       if (!(ex instanceof TestFailedButDeviceReusable)) {
         this.holders.delete(holder);
-        if ('destroy' in holder.device) {
+        if ('destroy' in holder.device && holder.device.destroy) {
+          holder.device.queue.submit([]);
           holder.device.destroy();
           // Wait for destruction (or actual device loss if any) to complete.
           // await holder.device.lost;
+          await new Promise<void>(resolve => {
+            setTimeout(resolve, 5);
+          });
         }
 
         // Release the (hopefully only) ref to the GPUDevice.

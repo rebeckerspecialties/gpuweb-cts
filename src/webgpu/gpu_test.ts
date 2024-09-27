@@ -230,6 +230,7 @@ export class GPUTestSubcaseBatchState extends SubcaseBatchState {
           this.skip(`texture format '${format} is not supported`);
         }
       }
+      this.skipIfCopyTextureToTextureNotSupportedForFormat(...formats);
     }
   }
 

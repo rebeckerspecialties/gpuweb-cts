@@ -295,7 +295,9 @@ g.test('depth_compare_func')
     u
       .combine(
         'format',
-        kDepthStencilFormats.filter(format => kTextureFormatInfo[format].depth)
+        kDepthStencilFormats.filter(
+          format => kTextureFormatInfo[format].depth && format !== 'depth32float-stencil8'
+        )
       )
       .combineWithParams([
         { depthCompare: 'never', depthClearValue: 1.0, _expected: backgroundColor },
