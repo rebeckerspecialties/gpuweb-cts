@@ -9,6 +9,7 @@ import { assert, unreachable } from '../common/util/util';
 const filterQuery = 'webgpu:api,operation,*';
 
 globalTestConfig.compatibility = true;
+globalTestConfig.maxSubcasesInFlight = 1;
 
 export const runTests = async () => {
   const loader = new DefaultTestFileLoader();
