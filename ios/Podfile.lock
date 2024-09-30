@@ -1544,6 +1544,29 @@ PODS:
     - React-Core
     - React-jsi
   - ReactTestApp-Resources (1.0.0-dev)
+  - rn-fetch-blob (0.12.0):
+    - React-Core
+  - RNShare (11.0.3):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - SocketRocket (0.7.0)
   - Yoga (0.0.0)
 
@@ -1615,6 +1638,8 @@ DEPENDENCIES:
   - "ReactNativeHost (from `../node_modules/@rnx-kit/react-native-host`)"
   - ReactTestApp-DevSupport (from `../node_modules/react-native-test-app`)
   - ReactTestApp-Resources (from `..`)
+  - rn-fetch-blob (from `../node_modules/rn-fetch-blob`)
+  - RNShare (from `../node_modules/react-native-share`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -1753,6 +1778,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-test-app"
   ReactTestApp-Resources:
     :path: ".."
+  rn-fetch-blob:
+    :path: "../node_modules/rn-fetch-blob"
+  RNShare:
+    :path: "../node_modules/react-native-share"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -1822,6 +1851,8 @@ SPEC CHECKSUMS:
   ReactNativeHost: c66372f767ef829c03a9b5ba0e3355db51c2902d
   ReactTestApp-DevSupport: 690d06567b7ecae4f2f98dff5e4881c8d25be8e2
   ReactTestApp-Resources: 7db90c026cccdf40cfa495705ad436ccc4d64154
+  rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
+  RNShare: e655d9afb56a76d46022eb2e33f9d3240bdbbe45
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   Yoga: e9d425c3e26325be2fa9534b316a7452fb4d7b5e
 
